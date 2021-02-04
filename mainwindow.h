@@ -25,9 +25,14 @@ private slots:
 
     void readFromPort();
 
+    void on_pushButtonTurnOnDiode_clicked();
+
+    void on_pushButtonTurnOffDiode_clicked();
+
 private:
     Ui::MainWindow *ui;
     void addToLogs(QString message);
+    void sendMessageToDevice(QString message);
 
     QSerialPort *device;
 };

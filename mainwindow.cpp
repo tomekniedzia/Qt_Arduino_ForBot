@@ -40,6 +40,17 @@ void MainWindow::addToLogs(QString message)
     ui->textEditLogs->append(currentDateTime + "\t" + message);
 }
 
+void MainWindow::sendMessageToDevice(QString message)
+{
+    if(this->device->isOpen() && this->device->isWritable())
+    {
+        this->addToLogs("Send information to device " + message);
+        this->device->write(message.toStdString().c_str());
+    }
+    else
+        this->addToLogs("Can't sending message. Port isn't open!");
+}
+
 void MainWindow::on_pushButtonConnect_clicked()
 {
     if(ui->comboBoxDevices->count() == 0)
@@ -106,4 +117,14 @@ void MainWindow::readFromPort()
 
         this->addToLogs(line.left(pos));
     }
+}
+
+void MainWindow::on_pushButtonTurnOnDiode_clicked()
+{
+    this->sendMessageToDevice("1");
+}
+
+void MainWindow::on_pushButtonTurnOffDiode_clicked()
+{
+    this->sendMessageToDevice("0");
 }
